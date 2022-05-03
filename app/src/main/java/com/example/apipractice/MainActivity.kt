@@ -3,7 +3,11 @@ package com.example.apipractice
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Log.d
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,9 +18,18 @@ import java.lang.StringBuilder
 const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
 class MainActivity : AppCompatActivity() {
+    lateinit var myAdapter: MyAdapter
+    lateinit var linearLayoutManager: LinearLayoutManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        recyclerview_users.setHasFixedSize(true)
+        linearLayoutManager = LinearLayoutManager(this)
+        recyclerview_users.layoutManager = linearLayoutManager
+
+
 
         getMyData()
     }
@@ -33,18 +46,14 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<MyDataItem>?>, response: Response<List<MyDataItem>?>) {
                 val responseBody = response.body()!!
 
-                val myStringBuilder = StringBuilder()
-                for(myData in responseBody){
-                    myStringBuilder.append(myData.id)
-                    myStringBuilder.append("\n")
-                }
-                val textView: TextView? = findViewById(R.id.txtId)
-                textView?.text = myStringBuilder
+                myAdapter = MyAdapter(baseContext, responseBody)
+                myAdapter.notifyDataSetChanged()
+                recyclerview_users.adapter = myAdapter
 
             }
 
             override fun onFailure(call: Call<List<MyDataItem>?>, t: Throwable) {
-                Log.d("MainAcivity", "onFailure: " +t.message)
+                d("MainAcivity", "onFailure: " +t.message)
             }
         })
 
