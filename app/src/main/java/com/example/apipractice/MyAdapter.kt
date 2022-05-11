@@ -8,17 +8,18 @@ import android.widget.AbsListView
 import android.widget.TextView
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.apipractice.models.User
 import kotlinx.android.synthetic.main.row_items.view.*
 
-class MyAdapter(val context: Context, val userlist: List<MyDataItem>): RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+class MyAdapter(val context: Context, val userlist: List<User>): RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var userId: TextView
-        var title: TextView
+        var username: TextView
+        var companyname: TextView
 
         init {
-            userId = itemView.userId
-            title = itemView.title
+            username = itemView.userName
+            companyname = itemView.companyName
         }
 
 
@@ -30,8 +31,9 @@ class MyAdapter(val context: Context, val userlist: List<MyDataItem>): RecyclerV
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.userId.text = userlist[position].userId.toString()
-        holder.title.text = userlist[position].title
+        holder.username.text = userlist[position].name
+        //holder.userId.text = userlist[position].userId.toString()
+        holder.companyname.text = userlist[position].company.name
     }
 
     override fun getItemCount(): Int {

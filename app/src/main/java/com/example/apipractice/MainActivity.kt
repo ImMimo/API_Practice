@@ -7,6 +7,7 @@ import android.util.Log.d
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.apipractice.models.User
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,10 +41,10 @@ class MainActivity : AppCompatActivity() {
             .baseUrl(BASE_URL)
             .build()
             .create(ApiInterface::class.java)
-        val retrofitData = retrofitBuilder.getData()
+        val retrofitData = retrofitBuilder.getUsers()
 
-        retrofitData.enqueue(object : Callback<List<MyDataItem>?> {
-            override fun onResponse(call: Call<List<MyDataItem>?>, response: Response<List<MyDataItem>?>) {
+        retrofitData.enqueue(object : Callback<List<User>?> {
+            override fun onResponse(call: Call<List<User>?>, response: Response<List<User>?>) {
                 val responseBody = response.body()!!
 
                 myAdapter = MyAdapter(baseContext, responseBody)
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-            override fun onFailure(call: Call<List<MyDataItem>?>, t: Throwable) {
+            override fun onFailure(call: Call<List<User>?>, t: Throwable) {
                 d("MainAcivity", "onFailure: " +t.message)
             }
         })
