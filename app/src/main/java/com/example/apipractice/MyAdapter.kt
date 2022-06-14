@@ -15,11 +15,11 @@ class MyAdapter(val context: Context, val userlist: List<User>): RecyclerView.Ad
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var username: TextView
-        var companyname: TextView
+        var userAvailability: TextView
 
         init {
             username = itemView.userName
-            companyname = itemView.companyName
+            userAvailability = itemView.userAvailability
         }
 
 
@@ -33,10 +33,22 @@ class MyAdapter(val context: Context, val userlist: List<User>): RecyclerView.Ad
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.username.text = userlist[position].name
         //holder.userId.text = userlist[position].userId.toString()
-        holder.companyname.text = userlist[position].company.name
+        //holder.companyname.text = userlist[position].company.name
+        randomAvailability(userlist[position])
+        holder.userAvailability.text = userlist[position].availability
     }
 
     override fun getItemCount(): Int {
         return userlist.size
+    }
+
+    fun randomAvailability(user: User): String {
+        var randomNumber = (1..10).random()
+        user.availability = when(randomNumber){
+            in 1..6 -> "På kontoret"
+            in 7..9 -> "Online"
+            else -> "Sygemeldt"
+        }
+        return user.availability
     }
 }

@@ -6,6 +6,7 @@ data class User(
     val username:String,
     val email:String,
     val company: Company,
-    val website:String
+    val website:String,
+    var availability:String
     ) {
 }
