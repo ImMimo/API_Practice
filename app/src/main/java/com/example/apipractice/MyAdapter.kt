@@ -21,8 +21,6 @@ class MyAdapter(val context: Context, val userlist: List<User>): RecyclerView.Ad
             username = itemView.userName
             userAvailability = itemView.userAvailability
         }
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,12 +30,11 @@ class MyAdapter(val context: Context, val userlist: List<User>): RecyclerView.Ad
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.username.text = userlist[position].name
-        //holder.userId.text = userlist[position].userId.toString()
-        //holder.companyname.text = userlist[position].company.name
         randomAvailability(userlist[position])
         holder.userAvailability.text = userlist[position].availability
     }
-
+    //holder.userId.text = userlist[position].userId.toString()
+    //holder.companyname.text = userlist[position].company.name
     override fun getItemCount(): Int {
         return userlist.size
     }
